@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design Compiler</title>
+    <link rel="stylesheet" href="./assets/css/styles.css">
+    <link rel="stylesheet" href="./assets/css/prism.css">
+    <link rel="stylesheet" href="./assets/css/json-viewer.css">
+</head>
+<body>
+    
+    
+    <h1 class="text-center">Documenting Code with PrismJS</h1>
+
+    <ul class="sub_menu" id="sub_menu">
+        <li><a class="btn-code" data-value="0">1</a></li>
+        <li><a class="btn-code" data-value="1">2</a></li>
+        <li><a class="btn-code" data-value="2">3</a></li>
+        <li><a class="btn-code" data-value="3">4</a></li>
+        <li><a class="btn-code" data-value="4">5</a></li>
+    </ul>
+
+    <div class="container-compiler-api">
+<div class="container-example">
+
+<pre class="codePrev line-numbers"><code class="language-javascript" id="code-prev">fetch('https://demo.dotcms.com/api/content/query/+contentType:Activity/orderby/Activity.title')
+    .then(data => data.json())
+    .then(data => console.log(data.contentlest));
+</code></pre>
+
+<pre class="codePrev line-numbers"><code class="language-javascript">fetch('https://demo.dotcms.com/api/v1/page/render/index?language_id=1', {
+    headers: {
+        DOTAUTH: window.btoa('admin@dotcms.com:admin')
+    }
+})
+    .then(data => data.json())
+    .then(data => console.log(data));
+</code></pre>
+
+<pre class="codePrev line-numbers"><code class="language-javascript">fetch('https://demo.dotcms.com/api/v1/authentication/api-token', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+        user: 'admin@dotcms.com',
+        password: 'admin',
+        expirationDays: 10
+    })
+})
+    .then(data => data.json())
+    .then(data => console.log(data.entity));
+</code></pre>
+
+<pre class="codePrev line-numbers"><code class="language-javascript">const body = {
+    "query": {
+        "bool": {
+            "must": {
+                "term": {
+                    "catchall": "snow"
+                }
+            }
+        }
+    }
+};
+
+fetch('https://demo.dotcms.com/api/es/search', {
+    method: 'post',
+    headers: {
+        'Content-type': 'application/json'
+    },
+    body: JSON.stringify(body)
+})
+    .then(data => data.json())
+    .then(data => console.log(data.contentlets));
+</code></pre>
+
+<pre class="codePrev line-numbers"><code class="language-javascript">fetch('https://demo.dotcms.com/api/v1/authentication/api-token', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+        user: 'admin@dotcms.com',
+        password: 'admin',
+        expirationDays: 10
+    })
+})
+    .then(data => data.json())
+    .then(data => console.log(data.entity));
+</code></pre>
+
+</div>
+
+        <div class="btn-play" id="btn-play">
+            <svg xml:space="preserve" viewBox="0 0 100 100" y="0" x="0" xmlns="http://www.w3.org/2000/svg" version="1.1" width="47px" height="47px" xmlns:xlink="http://www.w3.org/1999/xlink" style="width:100%;height:100%;background-size:initial;background-position-y:initial;background-position-x:initial;background-origin:initial;background-image:initial;background-color: #fff;background-clip:initial;background-attachment:initial;animation-play-state:paused" ><g class="ldl-scale" style="transform-origin:50% 50%;transform:rotate(0deg) scale(0.8, 0.8);animation-play-state:paused" ><path fill="#333" d="M78.158 51.843L25.842 82.048c-1.418.819-3.191-.205-3.191-1.843v-60.41c0-1.638 1.773-2.661 3.191-1.843l52.317 30.205c1.418.819 1.418 2.867-.001 3.686z" style="animation-play-state:paused" ></path>
+            </g></svg>
+        </div>
+        <div class="container-code" id="code-container">
+            <span class="message-code-response" id="message">Hit the play button to get a response</span>
+        </div>
+    </div>
+
+    <script src="./assets/js/prism.js"></script>
+    <script src="./assets/js/json-viewer.js"></script>
+    <script src="./assets/js/main.js"></script>
+</body>
+</html>
