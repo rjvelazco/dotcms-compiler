@@ -251,7 +251,7 @@ btnCopyCode.addEventListener('click', ()=>{
     btnCopyCode.innerHTML = "Copied!";
     copyCodeResponse(codeResquests[option]);
     setTimeout(()=>{
-        btnCopyCode.innerHTML = "Copy Call";
+        btnCopyCode.innerHTML = "Copy function";
     }, 1500);
 });
 
