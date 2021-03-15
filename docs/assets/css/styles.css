@@ -40,9 +40,10 @@ body{
     display: flex;
     height: 500px;
     justify-content: center;
-    margin: auto;
     margin-bottom: 15px;
+    margin: auto;
     max-height: 500px;
+    max-width: 1200px;
     position: relative;
 }
 
@@ -53,6 +54,7 @@ body{
     justify-content: space-between;
     margin-top: 10px;
     margin: auto;
+    max-width: 1200px;
     width: 90%;
 }
 
