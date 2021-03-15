@@ -91,7 +91,7 @@ https://prismjs.com/download.html#themes=prism&languages=markup+css+clike+javasc
  .token.constant,
  .token.symbol,
  .token.deleted {
-	 color: #905;
+	 color: #17a2b8;
  }
  
  .token.selector,
@@ -116,12 +116,12 @@ https://prismjs.com/download.html#themes=prism&languages=markup+css+clike+javasc
  .token.atrule,
  .token.attr-value,
  .token.keyword {
-	 color: #66D9EF;
+	 color: #007bff;
  }
  
  .token.function,
  .token.class-name {
-	 color: #A6E22E;
+	 color: #6f42c1;
  }
  
  .token.regex,
