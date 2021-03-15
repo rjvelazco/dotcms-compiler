@@ -40,12 +40,10 @@ body{
     display: flex;
     height: 500px;
     justify-content: center;
-    margin-bottom: 50px;
-    margin-top: 50px;
     margin: auto;
+    margin-bottom: 15px;
     max-height: 500px;
     position: relative;
-    /* width: 1200px; */
 }
 
 .container-btn-copy-code{
