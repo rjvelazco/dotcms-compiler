@@ -40,8 +40,8 @@ body{
     display: flex;
     height: 500px;
     justify-content: center;
-    margin-bottom: 15px;
     margin: auto;
+    margin-bottom: 15px;
     max-height: 500px;
     max-width: 1200px;
     position: relative;
@@ -54,7 +54,7 @@ body{
     justify-content: space-between;
     margin-top: 10px;
     margin: auto;
-    max-width: 1200px;
+    max-width: 1080px;
     width: 90%;
 }
 

@@ -144,7 +144,7 @@ https://prismjs.com/download.html#themes=prism&languages=markup+css+clike+javasc
  
  pre[class*="language-"].line-numbers {
 	 position: relative;
-	 padding-left: 3.8em;
+	 padding-left: 3em;
 	 counter-reset: linenumber;
  }
  
@@ -161,7 +161,7 @@ https://prismjs.com/download.html#themes=prism&languages=markup+css+clike+javasc
 	 left: -3.8em;
 	 width: 3em; /* works for line-numbers below 1000 lines */
 	 letter-spacing: -1px;
-	 border-right: 1px solid #999;
+	 border-right: 1px solid rgba(51, 51, 51, 0.2);
  
 	 -webkit-user-select: none;
 	 -moz-user-select: none;
@@ -254,4 +254,5 @@ https://prismjs.com/download.html#themes=prism&languages=markup+css+clike+javasc
 	 word-wrap: break-word;
 	 overflow: hidden;
 	 overflow-y: auto;
+	 /* padding-left: 50px !important; */
  }
