@@ -1,4 +1,9 @@
-var prismJS = function(){
+// JSON VIEWER
+const toString=Object.prototype.toString;function isString(t){return"string"==typeof t}function isNumber(t){return"number"==typeof t}function isBoolean(t){return"boolean"==typeof t}function isUndefined(t){return void 0===t}function isArray(t){return"[object Array]"===toString.call(t)}function isObject(t){return"[object Object]"===toString.call(t)}function isNull(t){return"[object Null]"===toString.call(t)}function JsonViewer(t){if(this.options=Object.assign({theme:"light",container:null,data:"{}",expand:!1},t),isNull(t.container))throw new Error("Container: dom element is required");this.render()}JsonViewer.prototype.renderRight=function(t,e,n){isNumber(n)?e.setAttribute("class",t+"rightNumber"):isBoolean(n)?e.setAttribute("class",t+"rightBoolean"):"null"===n?e.setAttribute("class",t+"rightNull"):e.setAttribute("class",t+"rightString"),e.innerText=n},JsonViewer.prototype.renderChildren=function(t,e,n,r,i,o){let s=this,l=this.createElement("span"),a=this.options.expand?"rotate90":"",c=this.options.expand?"add-height":"";l.setAttribute("class",t+"folder "+a),l.onclick=function(t){let e=t.target.parentNode.nextSibling;s.toggleItem(e,t.target)};let p=0,u=!1;isObject(n)?(p=Object.keys(n).length,u=!0):p=n.length,o.innerHTML=u?e+"&nbsp;&nbsp{"+p+"}":e+"&nbsp;&nbsp["+p+"]",o.prepend(l),r.setAttribute("class",t+"rightObj "+c),s.parse(n,r,i+0,t)},JsonViewer.prototype.parse=function(t,e,n,r){const i=this;this.forEach(t,function(t,o){const{left:s,right:l}=i.createItem(n,r,e,o,"object"!=typeof t);"object"!=typeof t?i.renderRight(r,l,t):i.renderChildren(r,o,t,l,n,s)})},JsonViewer.prototype.createItem=function(t,e,n,r,i){let o=this,s=this.createElement("div"),l=this.createElement("div"),a=this.createElement("div"),c=this.createElement("div");return s.style.marginLeft=2*t+"px",l.innerHTML=`${r}<span class="jv-${e}-symbol">&nbsp;:&nbsp;</span>`,i?(s.appendChild(c),c.appendChild(l),c.appendChild(a),n.appendChild(s),s.setAttribute("class",e+"current"),c.setAttribute("class","jv-wrap"),l.setAttribute("class",e+"left")):(s.appendChild(l),s.appendChild(a),n.appendChild(s),s.setAttribute("class",e+"current"),l.setAttribute("class",e+"left jv-folder"),l.onclick=function(t){let e=t.target.nextSibling;o.toggleItem(e,t.target.querySelector("span"))}),{left:l,right:a,current:s}},JsonViewer.prototype.render=function(){let t,e=this.options.data,n="jv-"+this.options.theme+"-",r=this.options.container,i="object";r.setAttribute("class",n+"con");try{t=JSON.parse(e)}catch(t){throw new Error("It is not a json format")}isArray(t)&&(i="array");const{left:o,right:s}=this.createItem(0,n,r,i);this.renderChildren(n,i,t,s,0,o)},JsonViewer.prototype.toggleItem=function(t,e){t.classList.toggle("add-height"),e.classList.toggle("rotate90")},JsonViewer.prototype.createElement=function(t){return document.createElement(t)},JsonViewer.prototype.forEach=function(t,e){if(!isUndefined(t)&&!isNull(t))if("object"==typeof t&&isArray(t))for(let n=0,r=t.length;n<r;n++)e.call(null,t[n],n,t);else for(key in t)t.hasOwnProperty(key)&&e.call(null,t[key]||"null",key,t)};
+
+// PRIMSJS
+var prismJS = function(){/* PrismJS 1.23.0
+https://prismjs.com/download.html#themes=prism&languages=markup+css+clike+javascript+json&plugins=line-numbers+normalize-whitespace */
 var _self="undefined"!=typeof window?window:"undefined"!=typeof WorkerGlobalScope&&self instanceof WorkerGlobalScope?self:{},Prism=function(u){var c=/\blang(?:uage)?-([\w-]+)\b/i,n=0,e={},M={manual:u.Prism&&u.Prism.manual,disableWorkerMessageHandler:u.Prism&&u.Prism.disableWorkerMessageHandler,util:{encode:function e(n){return n instanceof W?new W(n.type,e(n.content),n.alias):Array.isArray(n)?n.map(e):n.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/\u00a0/g," ")},type:function(e){return Object.prototype.toString.call(e).slice(8,-1)},objId:function(e){return e.__id||Object.defineProperty(e,"__id",{value:++n}),e.__id},clone:function t(e,r){var a,n;switch(r=r||{},M.util.type(e)){case"Object":if(n=M.util.objId(e),r[n])return r[n];for(var i in a={},r[n]=a,e)e.hasOwnProperty(i)&&(a[i]=t(e[i],r));return a;case"Array":return n=M.util.objId(e),r[n]?r[n]:(a=[],r[n]=a,e.forEach(function(e,n){a[n]=t(e,r)}),a);default:return e}},getLanguage:function(e){for(;e&&!c.test(e.className);)e=e.parentElement;return e?(e.className.match(c)||[,"none"])[1].toLowerCase():"none"},currentScript:function(){if("undefined"==typeof document)return null;if("currentScript"in document)return document.currentScript;try{throw new Error}catch(e){var n=(/at [^(\r\n]*\((.*):.+:.+\)$/i.exec(e.stack)||[])[1];if(n){var t=document.getElementsByTagName("script");for(var r in t)if(t[r].src==n)return t[r]}return null}},isActive:function(e,n,t){for(var r="no-"+n;e;){var a=e.classList;if(a.contains(n))return!0;if(a.contains(r))return!1;e=e.parentElement}return!!t}},languages:{plain:e,plaintext:e,text:e,txt:e,extend:function(e,n){var t=M.util.clone(M.languages[e]);for(var r in n)t[r]=n[r];return t},insertBefore:function(t,e,n,r){var a=(r=r||M.languages)[t],i={};for(var l in a)if(a.hasOwnProperty(l)){if(l==e)for(var o in n)n.hasOwnProperty(o)&&(i[o]=n[o]);n.hasOwnProperty(l)||(i[l]=a[l])}var s=r[t];return r[t]=i,M.languages.DFS(M.languages,function(e,n){n===s&&e!=t&&(this[e]=i)}),i},DFS:function e(n,t,r,a){a=a||{};var i=M.util.objId;for(var l in n)if(n.hasOwnProperty(l)){t.call(n,l,n[l],r||l);var o=n[l],s=M.util.type(o);"Object"!==s||a[i(o)]?"Array"!==s||a[i(o)]||(a[i(o)]=!0,e(o,t,l,a)):(a[i(o)]=!0,e(o,t,null,a))}}},plugins:{},highlightAll:function(e,n){M.highlightAllUnder(document,e,n)},highlightAllUnder:function(e,n,t){var r={callback:t,container:e,selector:'code[class*="language-"], [class*="language-"] code, code[class*="lang-"], [class*="lang-"] code'};M.hooks.run("before-highlightall",r),r.elements=Array.prototype.slice.apply(r.container.querySelectorAll(r.selector)),M.hooks.run("before-all-elements-highlight",r);for(var a,i=0;a=r.elements[i++];)M.highlightElement(a,!0===n,r.callback)},highlightElement:function(e,n,t){var r=M.util.getLanguage(e),a=M.languages[r];e.className=e.className.replace(c,"").replace(/\s+/g," ")+" language-"+r;var i=e.parentElement;i&&"pre"===i.nodeName.toLowerCase()&&(i.className=i.className.replace(c,"").replace(/\s+/g," ")+" language-"+r);var l={element:e,language:r,grammar:a,code:e.textContent};function o(e){l.highlightedCode=e,M.hooks.run("before-insert",l),l.element.innerHTML=l.highlightedCode,M.hooks.run("after-highlight",l),M.hooks.run("complete",l),t&&t.call(l.element)}if(M.hooks.run("before-sanity-check",l),!l.code)return M.hooks.run("complete",l),void(t&&t.call(l.element));if(M.hooks.run("before-highlight",l),l.grammar)if(n&&u.Worker){var s=new Worker(M.filename);s.onmessage=function(e){o(e.data)},s.postMessage(JSON.stringify({language:l.language,code:l.code,immediateClose:!0}))}else o(M.highlight(l.code,l.grammar,l.language));else o(M.util.encode(l.code))},highlight:function(e,n,t){var r={code:e,grammar:n,language:t};return M.hooks.run("before-tokenize",r),r.tokens=M.tokenize(r.code,r.grammar),M.hooks.run("after-tokenize",r),W.stringify(M.util.encode(r.tokens),r.language)},tokenize:function(e,n){var t=n.rest;if(t){for(var r in t)n[r]=t[r];delete n.rest}var a=new i;return I(a,a.head,e),function e(n,t,r,a,i,l){for(var o in r)if(r.hasOwnProperty(o)&&r[o]){var s=r[o];s=Array.isArray(s)?s:[s];for(var u=0;u<s.length;++u){if(l&&l.cause==o+","+u)return;var c=s[u],g=c.inside,f=!!c.lookbehind,h=!!c.greedy,d=c.alias;if(h&&!c.pattern.global){var v=c.pattern.toString().match(/[imsuy]*$/)[0];c.pattern=RegExp(c.pattern.source,v+"g")}for(var p=c.pattern||c,m=a.next,y=i;m!==t.tail&&!(l&&y>=l.reach);y+=m.value.length,m=m.next){var k=m.value;if(t.length>n.length)return;if(!(k instanceof W)){var b,x=1;if(h){if(!(b=z(p,y,n,f)))break;var w=b.index,A=b.index+b[0].length,P=y;for(P+=m.value.length;P<=w;)m=m.next,P+=m.value.length;if(P-=m.value.length,y=P,m.value instanceof W)continue;for(var S=m;S!==t.tail&&(P<A||"string"==typeof S.value);S=S.next)x++,P+=S.value.length;x--,k=n.slice(y,P),b.index-=y}else if(!(b=z(p,0,k,f)))continue;var w=b.index,E=b[0],O=k.slice(0,w),L=k.slice(w+E.length),N=y+k.length;l&&N>l.reach&&(l.reach=N);var j=m.prev;O&&(j=I(t,j,O),y+=O.length),q(t,j,x);var C=new W(o,g?M.tokenize(E,g):E,d,E);if(m=I(t,j,C),L&&I(t,m,L),1<x){var _={cause:o+","+u,reach:N};e(n,t,r,m.prev,y,_),l&&_.reach>l.reach&&(l.reach=_.reach)}}}}}}(e,a,n,a.head,0),function(e){var n=[],t=e.head.next;for(;t!==e.tail;)n.push(t.value),t=t.next;return n}(a)},hooks:{all:{},add:function(e,n){var t=M.hooks.all;t[e]=t[e]||[],t[e].push(n)},run:function(e,n){var t=M.hooks.all[e];if(t&&t.length)for(var r,a=0;r=t[a++];)r(n)}},Token:W};function W(e,n,t,r){this.type=e,this.content=n,this.alias=t,this.length=0|(r||"").length}function z(e,n,t,r){e.lastIndex=n;var a=e.exec(t);if(a&&r&&a[1]){var i=a[1].length;a.index+=i,a[0]=a[0].slice(i)}return a}function i(){var e={value:null,prev:null,next:null},n={value:null,prev:e,next:null};e.next=n,this.head=e,this.tail=n,this.length=0}function I(e,n,t){var r=n.next,a={value:t,prev:n,next:r};return n.next=a,r.prev=a,e.length++,a}function q(e,n,t){for(var r=n.next,a=0;a<t&&r!==e.tail;a++)r=r.next;(n.next=r).prev=n,e.length-=a}if(u.Prism=M,W.stringify=function n(e,t){if("string"==typeof e)return e;if(Array.isArray(e)){var r="";return e.forEach(function(e){r+=n(e,t)}),r}var a={type:e.type,content:n(e.content,t),tag:"span",classes:["token",e.type],attributes:{},language:t},i=e.alias;i&&(Array.isArray(i)?Array.prototype.push.apply(a.classes,i):a.classes.push(i)),M.hooks.run("wrap",a);var l="";for(var o in a.attributes)l+=" "+o+'="'+(a.attributes[o]||"").replace(/"/g,"&quot;")+'"';return"<"+a.tag+' class="'+a.classes.join(" ")+'"'+l+">"+a.content+"</"+a.tag+">"},!u.document)return u.addEventListener&&(M.disableWorkerMessageHandler||u.addEventListener("message",function(e){var n=JSON.parse(e.data),t=n.language,r=n.code,a=n.immediateClose;u.postMessage(M.highlight(r,M.languages[t],t)),a&&u.close()},!1)),M;var t=M.util.currentScript();function r(){M.manual||M.highlightAll()}if(t&&(M.filename=t.src,t.hasAttribute("data-manual")&&(M.manual=!0)),!M.manual){var a=document.readyState;"loading"===a||"interactive"===a&&t&&t.defer?document.addEventListener("DOMContentLoaded",r):window.requestAnimationFrame?window.requestAnimationFrame(r):window.setTimeout(r,16)}return M}(_self);"undefined"!=typeof module&&module.exports&&(module.exports=Prism),"undefined"!=typeof global&&(global.Prism=Prism);
 Prism.languages.markup={comment:/<!--[\s\S]*?-->/,prolog:/<\?[\s\S]+?\?>/,doctype:{pattern:/<!DOCTYPE(?:[^>"'[\]]|"[^"]*"|'[^']*')+(?:\[(?:[^<"'\]]|"[^"]*"|'[^']*'|<(?!!--)|<!--(?:[^-]|-(?!->))*-->)*\]\s*)?>/i,greedy:!0,inside:{"internal-subset":{pattern:/(\[)[\s\S]+(?=\]>$)/,lookbehind:!0,greedy:!0,inside:null},string:{pattern:/"[^"]*"|'[^']*'/,greedy:!0},punctuation:/^<!|>$|[[\]]/,"doctype-tag":/^DOCTYPE/,name:/[^\s<>'"]+/}},cdata:/<!\[CDATA\[[\s\S]*?]]>/i,tag:{pattern:/<\/?(?!\d)[^\s>\/=$<%]+(?:\s(?:\s*[^\s>\/=]+(?:\s*=\s*(?:"[^"]*"|'[^']*'|[^\s'">=]+(?=[\s>]))|(?=[\s/>])))+)?\s*\/?>/,greedy:!0,inside:{tag:{pattern:/^<\/?[^\s>\/]+/,inside:{punctuation:/^<\/?/,namespace:/^[^\s>\/:]+:/}},"special-attr":[],"attr-value":{pattern:/=\s*(?:"[^"]*"|'[^']*'|[^\s'">=]+)/,inside:{punctuation:[{pattern:/^=/,alias:"attr-equals"},/"|'/]}},punctuation:/\/?>/,"attr-name":{pattern:/[^\s>\/]+/,inside:{namespace:/^[^\s>\/:]+:/}}}},entity:[{pattern:/&[\da-z]{1,8};/i,alias:"named-entity"},/&#x?[\da-f]{1,8};/i]},Prism.languages.markup.tag.inside["attr-value"].inside.entity=Prism.languages.markup.entity,Prism.languages.markup.doctype.inside["internal-subset"].inside=Prism.languages.markup,Prism.hooks.add("wrap",function(a){"entity"===a.type&&(a.attributes.title=a.content.replace(/&amp;/,"&"))}),Object.defineProperty(Prism.languages.markup.tag,"addInlined",{value:function(a,e){var s={};s["language-"+e]={pattern:/(^<!\[CDATA\[)[\s\S]+?(?=\]\]>$)/i,lookbehind:!0,inside:Prism.languages[e]},s.cdata=/^<!\[CDATA\[|\]\]>$/i;var t={"included-cdata":{pattern:/<!\[CDATA\[[\s\S]*?\]\]>/i,inside:s}};t["language-"+e]={pattern:/[\s\S]+/,inside:Prism.languages[e]};var n={};n[a]={pattern:RegExp("(<__[^>]*>)(?:<!\\[CDATA\\[(?:[^\\]]|\\](?!\\]>))*\\]\\]>|(?!<!\\[CDATA\\[)[^])*?(?=</__>)".replace(/__/g,function(){return a}),"i"),lookbehind:!0,greedy:!0,inside:t},Prism.languages.insertBefore("markup","cdata",n)}}),Object.defineProperty(Prism.languages.markup.tag,"addAttribute",{value:function(a,e){Prism.languages.markup.tag.inside["special-attr"].push({pattern:RegExp("(^|[\"'\\s])(?:"+a+")\\s*=\\s*(?:\"[^\"]*\"|'[^']*'|[^\\s'\">=]+(?=[\\s>]))","i"),lookbehind:!0,inside:{"attr-name":/^[^\s=]+/,"attr-value":{pattern:/=[\s\S]+/,inside:{value:{pattern:/(=\s*(["']|(?!["'])))\S[\s\S]*(?=\2$)/,lookbehind:!0,alias:[e,"language-"+e],inside:Prism.languages[e]},punctuation:[{pattern:/^=/,alias:"attr-equals"},/"|'/]}}}})}}),Prism.languages.html=Prism.languages.markup,Prism.languages.mathml=Prism.languages.markup,Prism.languages.svg=Prism.languages.markup,Prism.languages.xml=Prism.languages.extend("markup",{}),Prism.languages.ssml=Prism.languages.xml,Prism.languages.atom=Prism.languages.xml,Prism.languages.rss=Prism.languages.xml;
 !function(s){var e=/("|')(?:\\(?:\r\n|[\s\S])|(?!\1)[^\\\r\n])*\1/;s.languages.css={comment:/\/\*[\s\S]*?\*\//,atrule:{pattern:/@[\w-](?:[^;{\s]|\s+(?![\s{]))*(?:;|(?=\s*\{))/,inside:{rule:/^@[\w-]+/,"selector-function-argument":{pattern:/(\bselector\s*\(\s*(?![\s)]))(?:[^()\s]|\s+(?![\s)])|\((?:[^()]|\([^()]*\))*\))+(?=\s*\))/,lookbehind:!0,alias:"selector"},keyword:{pattern:/(^|[^\w-])(?:and|not|only|or)(?![\w-])/,lookbehind:!0}}},url:{pattern:RegExp("\\burl\\((?:"+e.source+"|(?:[^\\\\\r\n()\"']|\\\\[^])*)\\)","i"),greedy:!0,inside:{function:/^url/i,punctuation:/^\(|\)$/,string:{pattern:RegExp("^"+e.source+"$"),alias:"url"}}},selector:RegExp("[^{}\\s](?:[^{};\"'\\s]|\\s+(?![\\s{])|"+e.source+")*(?=\\s*\\{)"),string:{pattern:e,greedy:!0},property:/(?!\s)[-_a-z\xA0-\uFFFF](?:(?!\s)[-\w\xA0-\uFFFF])*(?=\s*:)/i,important:/!important\b/i,function:/[-a-z0-9]+(?=\()/i,punctuation:/[(){};:,]/},s.languages.css.atrule.inside.rest=s.languages.css;var t=s.languages.markup;t&&(t.tag.addInlined("style","css"),t.tag.addAttribute("style","css"))}(Prism);
@@ -8,5 +13,289 @@ Prism.languages.json={property:{pattern:/(^|[^\\])"(?:\\.|[^\\"\r\n])*"(?=\s*:)/
 !function(){if("undefined"!=typeof self&&self.Prism&&self.document){var o="line-numbers",a=/\n(?!$)/g,e=Prism.plugins.lineNumbers={getLine:function(e,n){if("PRE"===e.tagName&&e.classList.contains(o)){var t=e.querySelector(".line-numbers-rows");if(t){var i=parseInt(e.getAttribute("data-start"),10)||1,r=i+(t.children.length-1);n<i&&(n=i),r<n&&(n=r);var s=n-i;return t.children[s]}}},resize:function(e){u([e])},assumeViewportIndependence:!0},t=function(e){return e?window.getComputedStyle?getComputedStyle(e):e.currentStyle||null:null},n=void 0;window.addEventListener("resize",function(){e.assumeViewportIndependence&&n===window.innerWidth||(n=window.innerWidth,u(Array.prototype.slice.call(document.querySelectorAll("pre."+o))))}),Prism.hooks.add("complete",function(e){if(e.code){var n=e.element,t=n.parentNode;if(t&&/pre/i.test(t.nodeName)&&!n.querySelector(".line-numbers-rows")&&Prism.util.isActive(n,o)){n.classList.remove(o),t.classList.add(o);var i,r=e.code.match(a),s=r?r.length+1:1,l=new Array(s+1).join("<span></span>");(i=document.createElement("span")).setAttribute("aria-hidden","true"),i.className="line-numbers-rows",i.innerHTML=l,t.hasAttribute("data-start")&&(t.style.counterReset="linenumber "+(parseInt(t.getAttribute("data-start"),10)-1)),e.element.appendChild(i),u([t]),Prism.hooks.run("line-numbers",e)}}}),Prism.hooks.add("line-numbers",function(e){e.plugins=e.plugins||{},e.plugins.lineNumbers=!0})}function u(e){if(0!=(e=e.filter(function(e){var n=t(e)["white-space"];return"pre-wrap"===n||"pre-line"===n})).length){var n=e.map(function(e){var n=e.querySelector("code"),t=e.querySelector(".line-numbers-rows");if(n&&t){var i=e.querySelector(".line-numbers-sizer"),r=n.textContent.split(a);i||((i=document.createElement("span")).className="line-numbers-sizer",n.appendChild(i)),i.innerHTML="0",i.style.display="block";var s=i.getBoundingClientRect().height;return i.innerHTML="",{element:e,lines:r,lineHeights:[],oneLinerHeight:s,sizer:i}}}).filter(Boolean);n.forEach(function(e){var i=e.sizer,n=e.lines,r=e.lineHeights,s=e.oneLinerHeight;r[n.length-1]=void 0,n.forEach(function(e,n){if(e&&1<e.length){var t=i.appendChild(document.createElement("span"));t.style.display="block",t.textContent=e}else r[n]=s})}),n.forEach(function(e){for(var n=e.sizer,t=e.lineHeights,i=0,r=0;r<t.length;r++)void 0===t[r]&&(t[r]=n.children[i++].getBoundingClientRect().height)}),n.forEach(function(e){var n=e.sizer,t=e.element.querySelector(".line-numbers-rows");n.style.display="none",n.innerHTML="",e.lineHeights.forEach(function(e,n){t.children[n].style.height=e+"px"})})}}}();
 !function(){var i=Object.assign||function(e,n){for(var t in n)n.hasOwnProperty(t)&&(e[t]=n[t]);return e};function e(e){this.defaults=i({},e)}function s(e){for(var n=0,t=0;t<e.length;++t)e.charCodeAt(t)=="\t".charCodeAt(0)&&(n+=3);return e.length+n}e.prototype={setDefaults:function(e){this.defaults=i(this.defaults,e)},normalize:function(e,n){for(var t in n=i(this.defaults,n)){var r=t.replace(/-(\w)/g,function(e,n){return n.toUpperCase()});"normalize"!==t&&"setDefaults"!==r&&n[t]&&this[r]&&(e=this[r].call(this,e,n[t]))}return e},leftTrim:function(e){return e.replace(/^\s+/,"")},rightTrim:function(e){return e.replace(/\s+$/,"")},tabsToSpaces:function(e,n){return n=0|n||4,e.replace(/\t/g,new Array(++n).join(" "))},spacesToTabs:function(e,n){return n=0|n||4,e.replace(RegExp(" {"+n+"}","g"),"\t")},removeTrailing:function(e){return e.replace(/\s*?$/gm,"")},removeInitialLineFeed:function(e){return e.replace(/^(?:\r?\n|\r)/,"")},removeIndent:function(e){var n=e.match(/^[^\S\n\r]*(?=\S)/gm);return n&&n[0].length?(n.sort(function(e,n){return e.length-n.length}),n[0].length?e.replace(RegExp("^"+n[0],"gm"),""):e):e},indent:function(e,n){return e.replace(/^[^\S\n\r]*(?=\S)/gm,new Array(++n).join("\t")+"$&")},breakLines:function(e,n){n=!0===n?80:0|n||80;for(var t=e.split("\n"),r=0;r<t.length;++r)if(!(s(t[r])<=n)){for(var i=t[r].split(/(\s+)/g),o=0,a=0;a<i.length;++a){var l=s(i[a]);n<(o+=l)&&(i[a]="\n"+i[a],o=l)}t[r]=i.join("")}return t.join("\n")}},"undefined"!=typeof module&&module.exports&&(module.exports=e),"undefined"!=typeof Prism&&(Prism.plugins.NormalizeWhitespace=new e({"remove-trailing":!0,"remove-indent":!0,"left-trim":!0,"right-trim":!0}),Prism.hooks.add("before-sanity-check",function(e){var n=Prism.plugins.NormalizeWhitespace;if((!e.settings||!1!==e.settings["whitespace-normalization"])&&Prism.util.isActive(e.element,"whitespace-normalization",!0))if(e.element&&e.element.parentNode||!e.code){var t=e.element.parentNode;if(e.code&&t&&"pre"===t.nodeName.toLowerCase()){for(var r=t.childNodes,i="",o="",a=!1,l=0;l<r.length;++l){var s=r[l];s==e.element?a=!0:"#text"===s.nodeName&&(a?o+=s.nodeValue:i+=s.nodeValue,t.removeChild(s),--l)}if(e.element.children.length&&Prism.plugins.KeepMarkup){var c=i+e.element.innerHTML+o;e.element.innerHTML=n.normalize(c,e.settings),e.code=e.element.textContent}else e.code=i+e.code+o,e.code=n.normalize(e.code,e.settings)}}else e.code=n.normalize(e.code,e.settings)}))}();
 }
-
 prismJS();
+
+// MAIN
+
+
+const btnCall     = document.querySelector('#run-call-btn'),
+responseContainer = document.querySelector('#fetch-response-container'),
+subMenu           = document.querySelector('#sub_menu'),
+codePre           = document.querySelector('#code-prev'),
+btnCopyCode       = document.querySelector('#btn-copy-code'),
+btnCopyResponse   = document.querySelector('#btn-copy-response');
+
+
+let option = '0';
+let data;
+
+
+// Event Listener
+btnCall.addEventListener('click', () => {
+    callEvents(option);
+});
+
+subMenu.addEventListener('click', (e)=>{
+    const target = e.target;
+    console.log(target);
+    disableCopyResponse();
+    if(target.localName === 'a'){
+        option = target.getAttribute('data-value');
+        changeFetchCall();
+    }
+});
+
+// Event
+const callEvents = async (action)=>{
+    messageUser("Waiting for response...");
+    switch(action){
+        case '0':
+            data = await request1();
+        break;
+        case '1':
+            data = await request2();
+        break;
+        case '2':
+            data = await request3();
+        break;
+        case '3':
+            data = await request4();
+        break;
+        case '4':
+            data = await request5();
+        break;
+    }
+    disableCopyResponse(false);
+    responseContainer.innerHTML = '';
+    insertResponseJsonFormat(data);
+}
+
+// Requests
+const request1 = async () => {
+    try{
+        const resp = await fetch('https://demo.dotcms.com/api/content/query/+contentType:Activity/orderby/Activity.title'); 
+        const data = await resp.json();
+        return data;
+    }catch(e){
+        console.log(e);
+    }
+};
+
+const request2 = async () => {
+    try{
+        const resp = await fetch('https://demo.dotcms.com/api/v1/page/render/index?language_id=1', {
+            headers: {
+                DOTAUTH: window.btoa('admin@dotcms.com:admin')
+            }
+        });
+        const data = await resp.json();
+        return data;
+    } catch(e){
+        console.log(e)
+    }
+}
+
+const request3 = async () => {
+
+    try{
+        const resp = await fetch('https://demo.dotcms.com/api/v1/authentication/api-token', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                user: 'admin@dotcms.com',
+                password: 'admin',
+                expirationDays: 10
+            })
+        });
+
+        const data = await resp.json();
+        return data;
+    } catch(e){
+        console.log(e);
+    }
+}
+
+const request4 = async () => {
+    try{
+        const body = {
+            "query": {
+                "bool": {
+                    "must": {
+                        "term": {
+                            "catchall": "snow"
+                        }
+                    }
+                }
+            }
+        };
+        const resp = await fetch('https://demo.dotcms.com/api/es/search', {
+            method: 'post',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify(body)
+        });
+
+        const data = await resp.json();
+        return data;
+    } catch(e){
+        console.log(e);
+    }
+}
+
+const request5 = async () => {
+
+    try{
+        const resp = await fetch('https://demo.dotcms.com/api/v1/authentication/api-token', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                user: 'admin@dotcms.com',
+                password: 'admin',
+                expirationDays: 10
+            })
+        });
+
+        const data = await resp.json();
+        return data;
+    } catch(e){
+        console.log(e);
+    }
+    
+}
+
+const insertResponseJsonFormat = (data) => {
+    data = JSON.stringify(data);
+    new JsonViewer({container: responseContainer, data, theme: 'light', expand: true});
+}
+
+const changeFetchCall = ()=>{
+    codePre.innerHTML = '';
+    codePre.innerHTML = codeResquests[option];
+    prismJS();
+    responseContainer.innerHTML = '<div class="container-message-user-no-action"><span class="message-user-no-action" id="message">Hit the play button to get a response</span></div>';
+}
+
+
+// REQUEST CODE TEXT
+const codeRequest1 = `fetch('https://demo.dotcms.com/api/content/query/+contentType:Activity/orderby/Activity.title')
+    .then(data => data.json())
+    .then(data => console.log(data))`;
+
+const codeRequest2 = `fetch('https://demo.dotcms.com/api/v1/page/render/index?language_id=1', 
+{
+    headers: {
+        DOTAUTH: window.btoa('admin@dotcms.com:admin')
+    }
+})
+    .then(data => data.json())
+    .then(data => console.log(data));`;
+
+const codeRequest3 = `fetch('https://demo.dotcms.com/api/v1/authentication/api-token', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+        user: 'admin@dotcms.com',
+        password: 'admin',
+        expirationDays: 10
+    })
+})
+    .then(data => data.json())
+    .then(data => console.log());`;
+
+const codeRequest4 = `const body = {
+    "query": {
+        "bool": {
+            "must": {
+                "term": {
+                    "catchall": "snow"
+                }
+            }
+        }
+    }
+};
+fetch('https://demo.dotcms.com/api/es/search', {
+    method: 'post',
+    headers: {
+        'Content-type': 'application/json'
+    },
+    body: JSON.stringify(body)
+})
+    .then(data => data.json())
+    .then(data =>console.log());`;
+
+const codeRequest5 = `fetch('https://demo.dotcms.com/api/v1/authentication/api-token', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+        user: 'admin@dotcms.com',
+        password: 'admin',
+        expirationDays: 10
+    })
+})
+    .then(data => data.json())
+    .then(data => console.log());`;
+
+const codeResquests = [codeRequest1, codeRequest2, codeRequest3, codeRequest4, codeRequest5];
+
+const messageUser = (message)=>{
+    const message_user = document.querySelector('#message');
+    message_user.innerHTML = message;
+}
+
+// Copy Code/Response Funciton
+const copyCodeResponse = (data)=>{
+    let clipInput = document.createElement('textarea');
+        
+    // document.body.innerHTML = data;
+    // clipInput.setAttribute('value', `${data}`);
+    clipInput.innerHTML = `${data}`;
+
+    console.log(clipInput);
+    document.body.appendChild(clipInput);
+    clipInput.select();
+
+    document.execCommand('copy');
+    document.body.removeChild(clipInput);
+}
+
+btnCopyCode.addEventListener('click', ()=>{
+    btnCopyCode.innerHTML = "Copied!";
+    copyCodeResponse(codeResquests[option]);
+    setTimeout(()=>{
+        btnCopyCode.innerHTML = "Copy function";
+    }, 1500);
+});
+
+btnCopyResponse.addEventListener('click', ()=>{
+    btnCopyResponse.innerHTML = "Copied!";
+
+    data = JSON.stringify(data, null, "\t");
+    console.log(data);
+    copyCodeResponse(data);
+    setTimeout(()=>{
+        btnCopyResponse.innerHTML = "Copy Response";
+    }, 1500);
+});
+
+
+// DISABLE BTN
+const disableCopyResponse = (toDisable = true) =>{
+    if(toDisable){
+        btnCopyResponse.disabled = true;
+        btnCopyResponse.classList.add('disabled');  
+    } else{
+        btnCopyResponse.disabled = false;
+        btnCopyResponse.classList.remove('disabled');
+    }
+}
+
+

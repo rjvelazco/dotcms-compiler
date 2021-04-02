@@ -177,7 +177,7 @@ https://prismjs.com/download.html#themes=prism&languages=markup+css+clike+javasc
  
 		 .line-numbers-rows > span:before {
 			 content: counter(linenumber);
-			 color: #999;
+			 color: #000;
 			 display: block;
 			 padding-right: 0.8em;
 			 text-align: right;
@@ -255,4 +255,4 @@ https://prismjs.com/download.html#themes=prism&languages=markup+css+clike+javasc
 	 overflow: hidden;
 	 overflow-y: auto;
 	 /* padding-left: 50px !important; */
- }
+}

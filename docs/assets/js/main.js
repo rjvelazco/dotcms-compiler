@@ -4,11 +4,14 @@ responseContainer = document.querySelector('#fetch-response-container'),
 subMenu           = document.querySelector('#sub_menu'),
 codePre           = document.querySelector('#code-prev'),
 btnCopyCode       = document.querySelector('#btn-copy-code'),
-btnCopyResponse   = document.querySelector('#btn-copy-response');
+btnCopyResponse   = document.querySelector('#btn-copy-response'),
+spanTextCode      =  document.querySelector('#span-text-test-code'),
+spanTextResponse  =  document.querySelector('#span-text-test-response');
 
 
 let option = '0';
 let data;
+let errorRequet = false;
 
 
 // Event Listener
@@ -28,6 +31,7 @@ subMenu.addEventListener('click', (e)=>{
 // Event
 const callEvents = async (action)=>{
     messageUser("Waiting for response...");
+    errorRequet = false;
     switch(action){
         case '0':
             data = await request1();
@@ -42,12 +46,18 @@ const callEvents = async (action)=>{
             data = await request4();
         break;
         case '4':
-            data = await request5();
+            data = await request5() || '';
         break;
     }
-    disableCopyResponse(false);
-    responseContainer.innerHTML = '';
-    insertResponseJsonFormat(data);
+    if(errorRequet){
+        console.log('Hola');
+        responseContainer.innerHTML = '<div class="container-message-user-no-action"><span class="message-user-no-action" id="message">Opp! Something went wrong</span></div>';
+    } else{
+        console.log('No');
+        disableCopyResponse(false);
+        responseContainer.innerHTML = '';
+        insertResponseJsonFormat(data);
+    }
 }
 
 // Requests
@@ -58,6 +68,8 @@ const request1 = async () => {
         return data;
     }catch(e){
         console.log(e);
+        errorRequet = true;
+
     }
 };
 
@@ -72,6 +84,8 @@ const request2 = async () => {
         return data;
     } catch(e){
         console.log(e)
+        errorRequet = true;
+
     }
 }
 
@@ -94,6 +108,8 @@ const request3 = async () => {
         return data;
     } catch(e){
         console.log(e);
+        errorRequet = true;
+
     }
 }
 
@@ -122,30 +138,23 @@ const request4 = async () => {
         return data;
     } catch(e){
         console.log(e);
+        errorRequet = true;
+
     }
 }
 
 const request5 = async () => {
-
     try{
-        const resp = await fetch('https://demo.dotcms.com/api/v1/authentication/api-token', {
-            method: 'POST',
+        const resp = await fetch('https://demo.dotcms.com/api/v1/nav/?depth=2', {
             headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                user: 'admin@dotcms.com',
-                password: 'admin',
-                expirationDays: 10
-            })
+                DOTAUTH: window.btoa('admin@dotcms.com:admin'),
+            }
         });
-
         const data = await resp.json();
         return data;
     } catch(e){
         console.log(e);
     }
-    
 }
 
 const insertResponseJsonFormat = (data) => {
@@ -248,21 +257,24 @@ const copyCodeResponse = (data)=>{
 }
 
 btnCopyCode.addEventListener('click', ()=>{
-    btnCopyCode.innerHTML = "Copied!";
+    spanTextCode.innerHTML = "COPIED!";
     copyCodeResponse(codeResquests[option]);
     setTimeout(()=>{
-        btnCopyCode.innerHTML = "Copy function";
+        spanTextCode.innerHTML = "COPY";
     }, 1500);
 });
 
 btnCopyResponse.addEventListener('click', ()=>{
-    btnCopyResponse.innerHTML = "Copied!";
+    if(btnCopyResponse.classList.contains('disabled')){
+        return;
+    }
+    spanTextResponse.innerHTML = "COPIED!";
 
     data = JSON.stringify(data, null, "\t");
     console.log(data);
     copyCodeResponse(data);
     setTimeout(()=>{
-        btnCopyResponse.innerHTML = "Copy Response";
+        spanTextResponse.innerHTML = "COPY";
     }, 1500);
 });
 
@@ -270,10 +282,8 @@ btnCopyResponse.addEventListener('click', ()=>{
 // DISABLE BTN
 const disableCopyResponse = (toDisable = true) =>{
     if(toDisable){
-        btnCopyResponse.disabled = true;
         btnCopyResponse.classList.add('disabled');  
     } else{
-        btnCopyResponse.disabled = false;
         btnCopyResponse.classList.remove('disabled');
     }
 }
